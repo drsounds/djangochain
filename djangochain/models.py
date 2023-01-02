@@ -170,31 +170,12 @@ class Operation(Node):
         )
 
     def to_sql(self):
-        sql = self.action
-        if self.action == 'INSERT':
-            sql += ' INTO '
-            sql += self.model + ' '
-            sql += '('
-            sql += ','.join(self.values.keys())
-            sql += ') '
-            sql += ' VALUES (' 
-            sql += ', '.join(map(lambda r: "'" + r + "'", self.values.values()))
-            sql += ');'
-        if self.action.startswith('UP'):
-            sql += ' ' + self.model + ' '
-            sql += ' SET '
-            assigns = []
-            for k, v in self.values:
-                assigns.append(f"{k} = '{v}")
-            sql += ', '.join(assigns)
-
-            if self.conditions and len(self.conditions.values()):
-                sql += ' WHERE '
-                assigns = []
-                for k, v in self.conditions:
-                    assigns.append(f"{k} = '{v}")
-                sql += ', '.join(assigns)
-        return sql
+        """
+        Function removed because I realized this was not a good practice,
+        instead execute sql through parameterized insertion by reading values, conditions, model and action
+        fields
+        """
+        raise Exception("No longer used")
 
     def __str__(self) -> str:
         return self.to_sql()
